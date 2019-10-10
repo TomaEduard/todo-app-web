@@ -41,8 +41,8 @@ class ListTodoComponent extends React.Component {
 
                     <tbody>
                         {
-                        this.state.todos.map(e => 
-                            <tr className="display-5">
+                        this.state.todos.map((e) => 
+                            <tr key={e.id} className="display-5">  
                                 <td>{e.id}</td>
                                 <td>{e.desciption}</td>
                                 <td>{e.done.toString()}</td>

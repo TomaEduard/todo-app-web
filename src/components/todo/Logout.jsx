@@ -6,13 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 
 class Logout extends React.Component {
-
-    constructor(props) { // accept props
-      super(props)       // pass props to super class
-            
-     
-    }
-  
     render () {
       return (
   

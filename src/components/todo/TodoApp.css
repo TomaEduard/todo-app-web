@@ -6,6 +6,7 @@
 }
 
 /* header */
+
 img {
   width: 60%;
   height: auto;
@@ -15,10 +16,15 @@ img {
   padding-bottom: 5px;
 }
 
+/* .navbar-brand {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: white;
+  font-size: 49px;
+  letter-spacing: -4px;
+} */
+
 .navbar-brand {
   display: inline-block;
-  /* padding-top: 0.3359375rem; */
-  /* padding-bottom: 0.3359375rem; */
   margin-right: -9rem;
   font-size: 1.09375rem;
   line-height: inherit;

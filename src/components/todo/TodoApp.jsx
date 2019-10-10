@@ -1,9 +1,15 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import ErrorComponent from '../todo/pages/ErrorComponent';
 import ListTodoComponent from '../todo/ListTodoComponent';
 import Logout from '../todo/Logout';
+import AuthenticationService from './AuthenticationService';
+import AuthenticatedRoute from './AuthentiocatedRoute.jsx';
+import Welcome from './Welcome';
+
+
+// css
 import './TodoApp.css';
 
 // react toastify
@@ -24,10 +30,10 @@ class TodoApp extends React.Component {
                         <Switch>
                             <Route exact path="/" component={LoginComponent}/>
                             <Route exact path="/login" component={LoginComponent}/>
-                            <Route path="/welcome/:name" component={Welcome}/>
-                            <Route path="/welcome/" component={Welcome}/>
-                            <Route exact path="/todos" component={ListTodoComponent}/>
-                            <Route exact path="/logout" component={Logout}/>
+                            <AuthenticatedRoute path="/welcome/:name" component={Welcome}/>
+                            {/* <Route exact path="/welcome/" component={Welcome}/> */}
+                            <AuthenticatedRoute path="/todos" component={ListTodoComponent}/>
+                            <AuthenticatedRoute path="/logout" component={Logout}/>
 
                             <Route component={ErrorComponent} />
 
@@ -45,23 +51,7 @@ class TodoApp extends React.Component {
     }
 }
 
-class Welcome extends React.Component {
-    render() {
-        return(
-            <React.Fragment>
-                <h1 className="font-weight-bold">Welcome!</h1>
 
-                <div className="container">
-                    Welcome {this.props.match.params.name}. You can manage your todos 
-                    <Link to="/todos" className="here"> here</Link>.                
-                
-                </div>
-
-            </React.Fragment>
-        )
-
-    }
-}
 
 class LoginComponent extends React.Component {
 
@@ -118,16 +108,22 @@ class LoginComponent extends React.Component {
         console.log(this.state);
 
         if(this.state.username === 'defaultValue' && this.state.password === 'dummy') {
-            this.props.history.push(`/welcome/${this.state.username}`)
-
             // this.setState({
             //     showSuccesMessage: true,
             //     hasLoginFailed: false,
             // })
+            
+            AuthenticationService.registerSuccesfulLogin(this.state.username, this.state.password);
+
+            this.props.history.push(`/welcome/${this.state.username}`)
+
+            AuthenticationService.refreshPage();
+
 
             console.log("🦄 Login Successful!");
             toast("🦄 Login Successful !", {autoClose:3000,type: toast.TYPE.SUCCESS, position:toast.POSITION.BOTTOM_RIGHT})
-              
+            
+            
         } else {
 
             this.setState({
