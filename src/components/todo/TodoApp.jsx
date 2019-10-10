@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import ErrorComponent from '../todo/pages/ErrorComponent';
+import ListTodoComponent from '../todo/ListTodoComponent';
 import './TodoApp.css';
 
 // react toastify
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Header from './pages/Header';
+import Footer from './pages/Footer';
 toast.configure();
 
 class TodoApp extends React.Component {
@@ -15,14 +18,18 @@ class TodoApp extends React.Component {
             <div className="TodoApp">
                 <Router>
                     <React.Fragment>
+                        <Header/>
                         <Switch>
                             <Route exact path="/" component={LoginComponent}/>
                             <Route exact path="/login" component={LoginComponent}/>
-                            <Route exact path="/welcome" component={WelcomeComponent}/>
+                            <Route path="/welcome/:name" component={WelcomeComponent}/>
+                            <Route path="/welcome/" component={WelcomeComponent}/>
+                            <Route exact path="/todos" component={ListTodoComponent}/>
+
                             <Route component={ErrorComponent} />
 
                         </Switch>
-         
+                        <Footer/>
                     </React.Fragment>
 
                 </Router>
@@ -37,7 +44,13 @@ class TodoApp extends React.Component {
 
 class WelcomeComponent extends React.Component {
     render() {
-        return <div>Welcome to Todo App.</div>
+        return(
+            <React.Fragment>
+                <div>Welcome {this.props.match.params.name}. You can manage your todos <Link to="/todos">here</Link>.</div>
+
+            </React.Fragment>
+        )
+
     }
 }
 
@@ -56,7 +69,6 @@ class LoginComponent extends React.Component {
     }
   
     handleChange = (event) => {
-        
         
         console.log("#1 event: ",event);
         console.log("#2 event.target.value: ",event.target.value);
@@ -97,7 +109,7 @@ class LoginComponent extends React.Component {
         console.log(this.state);
 
         if(this.state.username === 'defaultValue' && this.state.password === 'dummy') {
-            this.props.history.push("/welcome")
+            this.props.history.push(`/welcome/${this.state.username}`)
 
             // this.setState({
             //     showSuccesMessage: true,
@@ -124,27 +136,27 @@ class LoginComponent extends React.Component {
   
         <React.Fragment>
             
-        <div>
-            {/* if this.state.hasLoginFailed is true, show <div> ... </div> */}
-            {/* need to close after x number of sec. */}
-            {/*             
-            {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-            {this.state.showSuccesMessage && <div>Login Successful !</div>} 
-            */}
+            <div>
+                {/* if this.state.hasLoginFailed is true, show <div> ... </div> */}
+                {/* need to close after x number of sec. */}
+                {/*             
+                {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+                {this.state.showSuccesMessage && <div>Login Successful !</div>} 
+                */}
 
-            User Name:<input type="text" 
-            name="username" 
-            value={this.state.username}
-            onChange={this.handleChange}
-            />
+                User Name:<input type="text" 
+                name="username" 
+                value={this.state.username}
+                onChange={this.handleChange}
+                />
 
-            Password:<input type="password" 
-            name="password" 
-            value={this.state.password}
-            onChange={this.handleChange}
-            />
+                Password:<input type="password" 
+                name="password" 
+                value={this.state.password}
+                onChange={this.handleChange}
+                />
 
-            <button onClick={this.loginClicked}>Login</button>
+                <button onClick={this.loginClicked}>Login</button>
             </div>
         </React.Fragment>
       )
