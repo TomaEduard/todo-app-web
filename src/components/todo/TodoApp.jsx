@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import ErrorComponent from '../todo/pages/ErrorComponent';
 import ListTodoComponent from '../todo/ListTodoComponent';
+import Logout from '../todo/Logout';
 import './TodoApp.css';
 
 // react toastify
@@ -22,9 +24,10 @@ class TodoApp extends React.Component {
                         <Switch>
                             <Route exact path="/" component={LoginComponent}/>
                             <Route exact path="/login" component={LoginComponent}/>
-                            <Route path="/welcome/:name" component={WelcomeComponent}/>
-                            <Route path="/welcome/" component={WelcomeComponent}/>
+                            <Route path="/welcome/:name" component={Welcome}/>
+                            <Route path="/welcome/" component={Welcome}/>
                             <Route exact path="/todos" component={ListTodoComponent}/>
+                            <Route exact path="/logout" component={Logout}/>
 
                             <Route component={ErrorComponent} />
 
@@ -42,11 +45,17 @@ class TodoApp extends React.Component {
     }
 }
 
-class WelcomeComponent extends React.Component {
+class Welcome extends React.Component {
     render() {
         return(
             <React.Fragment>
-                <div>Welcome {this.props.match.params.name}. You can manage your todos <Link to="/todos">here</Link>.</div>
+                <h1 className="font-weight-bold">Welcome!</h1>
+
+                <div className="container">
+                    Welcome {this.props.match.params.name}. You can manage your todos 
+                    <Link to="/todos" className="here"> here</Link>.                
+                
+                </div>
 
             </React.Fragment>
         )
@@ -117,7 +126,7 @@ class LoginComponent extends React.Component {
             // })
 
             console.log("🦄 Login Successful!");
-            toast("🦄 Login Successful !", {autoClose:2200,type: toast.TYPE.SUCCESS, position:toast.POSITION.BOTTOM_CENTER})
+            toast("🦄 Login Successful !", {autoClose:3000,type: toast.TYPE.SUCCESS, position:toast.POSITION.BOTTOM_RIGHT})
               
         } else {
 
@@ -127,7 +136,8 @@ class LoginComponent extends React.Component {
             })
 
             console.log("Failed");
-            
+            toast("Invalid Credentials !", {autoClose:3000,type: toast.TYPE.WARNING, position:toast.POSITION.TOP_CENTER})
+
         }
     }
 
@@ -136,28 +146,34 @@ class LoginComponent extends React.Component {
   
         <React.Fragment>
             
-            <div>
                 {/* if this.state.hasLoginFailed is true, show <div> ... </div> */}
                 {/* need to close after x number of sec. */}
-                {/*             
-                {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-                {this.state.showSuccesMessage && <div>Login Successful !</div>} 
-                */}
+                    {/* {this.state.hasLoginFailed && <div className="alert alert-warning font-weight-bold">Invalid Credentials!</div>}
+                    {this.state.showSuccesMessage && <div>Login Successful !</div>}  */}
 
-                User Name:<input type="text" 
-                name="username" 
-                value={this.state.username}
-                onChange={this.handleChange}
-                />
+                <h1>Login</h1>
+                <div className="container">
+                    
+                    User Name: <input type="text"
+                    name="username" 
+                    value={this.state.username}
+                    onChange={this.handleChange}
+                    />
 
-                Password:<input type="password" 
-                name="password" 
-                value={this.state.password}
-                onChange={this.handleChange}
-                />
+                    Password: <input type="password" 
+                    name="password" 
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    
 
-                <button onClick={this.loginClicked}>Login</button>
-            </div>
+                    />
+
+                    <button 
+                        className="btn btn-success"
+                        onClick={this.loginClicked}>Login
+                    </button>
+                </div>
+
         </React.Fragment>
       )
     }

@@ -27,10 +27,11 @@ class ListTodoComponent extends React.Component {
         <React.Fragment>
             
             <div className="container">
-                <h2>List Todos</h2>
-                <table>
+                <div className="display-4 font-weight-bold">List Todos</div>
+                
+                <table className="table table-striped">
                     <thead>
-                        <tr>
+                        <tr className="display-5">
                             <th>Id</th>
                             <th>Desciption</th>
                             <th>Completet</th>
@@ -41,7 +42,7 @@ class ListTodoComponent extends React.Component {
                     <tbody>
                         {
                         this.state.todos.map(e => 
-                            <tr>
+                            <tr className="display-5">
                                 <td>{e.id}</td>
                                 <td>{e.desciption}</td>
                                 <td>{e.done.toString()}</td>
@@ -58,7 +59,5 @@ class ListTodoComponent extends React.Component {
       )
     }
 }
-
-
 
 export default ListTodoComponent;

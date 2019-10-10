@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import './Header.css';
+// import './Header.css';
+import '../TodoApp.css';
+import Logout from '../Logout';
 
 
 export default function Header() {
@@ -28,7 +30,7 @@ export default function Header() {
 
         <ul className="navbar-nav navbar-collapse justify-content-end">
           <li className="nav-link display-5 px-5"><Link to="/login">Login</Link></li>
-          <li className="nav-link display-5 pr-5"><Link to="/welcome">Logout</Link></li>
+          <li className="nav-link display-5 pr-5"><Link to="/logout">Logout</Link></li>
         </ul>
         
 

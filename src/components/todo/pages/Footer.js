@@ -1,14 +1,11 @@
 import React from 'react'
 
-export default function Header() {
+export default function Footer() {
   return (
-    <div>
+    <footer className="footer">
+      <span className="text-muted">All Rights Reserved 2019 Todo Application.</span>
 
-      <hr/>
-
-      Footer
-      
-    </div>
+    </footer>
   )
 }
 
