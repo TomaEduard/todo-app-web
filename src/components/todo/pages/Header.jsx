@@ -12,8 +12,8 @@ export default function Header() {
   return (
 
     <header>
-      <nav className="navbar navbar-expand-md bg-dark">
-        {/* <div><a className="navbar-brand text-white">to do list</a></div> */}
+      <nav className="navbar navbar-expand-md bg-dark p-0 m-0">
+        {/* <div><a className="navbar-brand text-white">todo.<span>List</span></a></div> */}
 
         <div className="navbar-brand icon-header pl-5">
           <Link to="/">
@@ -26,7 +26,7 @@ export default function Header() {
 
 
         <ul className="navbar-nav">
-          {isUserLoggedIn && <li className="nav-link display-5"><Link to="/welcome">Home</Link></li>}
+          {isUserLoggedIn && <li className="nav-link display-5 ml-5"><Link to="/welcome">Home</Link></li>}
           {isUserLoggedIn && <li className="nav-link display-5 px-5"><Link to="/todos">Todos</Link></li>}
         </ul>
 
