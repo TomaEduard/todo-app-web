@@ -60,7 +60,7 @@ class ListTodoComponent extends React.Component {
                         this.state.todos.map((e) => 
                             <tr key={e.id} className="display-5">  
                                 <td>{e.id}</td>
-                                <td>{e.desciption}</td>
+                                <td>{e.description}</td>
                                 <td>{e.done.toString()}</td>
                                 <td>{e.targetDate.toString()}</td>
                             </tr>
