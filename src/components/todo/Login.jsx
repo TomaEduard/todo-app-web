@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthenticationService from './AuthenticationService.jsx';
+import AuthenticationService from './AuthenticationService.js';
 
 // react toastify
 import {toast} from 'react-toastify';

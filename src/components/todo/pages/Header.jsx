@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 // import './Header.css';
 import '../TodoApp.css';
-import AuthenticationService from '../AuthenticationService.jsx';
+import AuthenticationService from '../AuthenticationService.js';
 
 export default function Header() {
 

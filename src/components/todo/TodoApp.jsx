@@ -8,7 +8,7 @@ import Welcome from './Welcome.jsx';
 import Header from './pages/Header.jsx';
 import Footer from './pages/Footer.jsx';
 import Login from './Login.jsx';
-import AuthenticationService from './AuthenticationService.jsx';
+import AuthenticationService from './AuthenticationService.js';
 
 
 import AuthenticatedRoute from './AuthentiocatedRoute.jsx';

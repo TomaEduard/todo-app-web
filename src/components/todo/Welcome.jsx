@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Link} from 'react-router-dom';
+import { BrowserRouter as Route, Link } from 'react-router-dom';
 import HelloWorldService from '../../api/todo/HelloWorldService.js';
 import { log } from 'handlebars';
 
@@ -18,22 +18,27 @@ class Welcome extends React.Component {
         // )
 
         // console.log('retreive clicked');
-        HelloWorldService.executeHelloWorldBeanService()
-        .then(response => this.handleSuccesfulResponse(response)
-        )
+        // HelloWorldService.executeHelloWorldBeanService()
+        // .then(response => this.handleSuccesfulResponse(response)
+        // )
 
         HelloWorldService.executeHelloWorldPathVariable(this.props.match.params.name)
-        .then(response => this.handleSuccesfulResponse(response)
-        )
+        .then(response => this.handleSuccesfulResponse(response))
+        .catch(error => this.handleError(error))
 
     }
 
     handleSuccesfulResponse(response) {
         console.log(response);
-        
         this.setState ({
             welcomeMessage: response.data.message,
+        })
+    }
 
+    handleError(error) {
+        console.log(error.response);
+        this.setState ({
+            welcomeMessage: error.response.data.message,
         })
     }
 
