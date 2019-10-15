@@ -14,16 +14,17 @@ class ListTodoComponent extends React.Component {
     constructor(props) { // accept props
       super(props)       // pass props to super class
       this.state = {
-        todos: [
-            // {id: 1, desciption: 'Lern React', done: false, targetDate: new Date()},
-            // {id: 2, desciption: 'Becom an Expert at React', done: false, targetDate: new Date()},
-            // {id: 3, desciption: 'Visit India', done: false, targetDate: new Date()},
-        ]
-            
+        todos: [],
+        message: null,
       }
     }
   
     componentDidMount() {
+        let username = AuthenticationService.getLoggInUserName();
+        this.refreshTodos();
+    }
+
+    refreshTodos() { 
         let username = AuthenticationService.getLoggInUserName();
         TodoDataService.retrieveAllTodos(username)
             .then (response => {
@@ -35,8 +36,22 @@ class ListTodoComponent extends React.Component {
             })
     }
 
+    deleteTodoClicked(id) {
+        let username = AuthenticationService.getLoggInUserName();
+        console.log("deleteTodoClicked - ",username, " + ", id);
+        
+        TodoDataService.deleteTodo(username, id)
+            .then(
+                response => {
+                    this.setState ({
+                        message: `Delete todo #${id} Succesfully!`
+                    });
+                    this.refreshTodos();
+                }
+            )
+    }
+
     render () {
-  
         
         return (
   
@@ -44,14 +59,16 @@ class ListTodoComponent extends React.Component {
             
             <div className="container">
                 <div className="display-4 font-weight-bold">List Todos</div>
-                
+                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+
                 <table className="table table-striped">
                     <thead>
                         <tr className="display-5">
-                            <th>Id</th>
+                            {/* <th>Id</th> */}
                             <th>Desciption</th>
                             <th>Completet</th>
                             <th>Target Date</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
 
@@ -59,10 +76,15 @@ class ListTodoComponent extends React.Component {
                         {
                         this.state.todos.map((e) => 
                             <tr key={e.id} className="display-5">  
-                                <td>{e.id}</td>
+                                {/* <td>{e.id}</td> */}
                                 <td>{e.description}</td>
                                 <td>{e.done.toString()}</td>
                                 <td>{e.targetDate.toString()}</td>
+                                <td>
+                                    <button className="btn btn-warning" 
+                                    onClick={() => this.deleteTodoClicked(e.id)}
+                                    >Delete</button>
+                                </td>
                             </tr>
                         )
                         }
