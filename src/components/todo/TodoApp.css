@@ -89,6 +89,11 @@ input, select, optgroup, textarea {
   color: rgb(28, 191, 255);
 }
 
+/* update */
+.button-update {
+  width: 91px;
+}
+
 /* footer */
 .footer {
   position: absolute;

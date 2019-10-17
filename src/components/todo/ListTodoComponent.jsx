@@ -2,6 +2,9 @@ import React from 'react';
 import './TodoApp.css';
 import TodoDataService from '../../api/todo/TodoDataService.js'
 import AuthenticationService from './AuthenticationService.js';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
+
 
 // react toastify
 import {toast} from 'react-toastify';
@@ -36,6 +39,24 @@ class ListTodoComponent extends React.Component {
             })
     }
 
+    updateTodoClicked(id) {
+        console.log('update ', id);
+        this.props.history.push(`/todos/${id}`)
+
+        // let username = AuthenticationService.getLoggInUserName();
+        // console.log("deleteTodoClicked - ",username, " + ", id);
+        
+        // TodoDataService.deleteTodo(username, id)
+        //     .then(
+        //         response => {
+        //             this.setState ({
+        //                 message: `Delete todo #${id} Succesfully!`
+        //             });
+        //             this.refreshTodos();
+        //         }
+        //     )
+    }
+
     deleteTodoClicked(id) {
         let username = AuthenticationService.getLoggInUserName();
         console.log("deleteTodoClicked - ",username, " + ", id);
@@ -68,6 +89,7 @@ class ListTodoComponent extends React.Component {
                             <th>Desciption</th>
                             <th>Completet</th>
                             <th>Target Date</th>
+                            <th>Update</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -81,7 +103,12 @@ class ListTodoComponent extends React.Component {
                                 <td>{e.done.toString()}</td>
                                 <td>{e.targetDate.toString()}</td>
                                 <td>
-                                    <button className="btn btn-warning" 
+                                    <button className="btn btn-lg btn-success" 
+                                    onClick={() => this.updateTodoClicked(e.id)}
+                                    >Update</button>
+                                </td>
+                                <td>
+                                    <button className="btn btn-lg btn-warning" 
                                     onClick={() => this.deleteTodoClicked(e.id)}
                                     >Delete</button>
                                 </td>

@@ -9,7 +9,7 @@ import Header from './pages/Header.jsx';
 import Footer from './pages/Footer.jsx';
 import Login from './Login.jsx';
 import AuthenticationService from './AuthenticationService.js';
-
+import UpdateTodo from './UpdateTodo.jsx';
 
 import AuthenticatedRoute from './AuthentiocatedRoute.jsx';
 
@@ -39,14 +39,10 @@ class TodoApp extends React.Component {
     render() {
 
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
-
         console.log("TodoApp - isUserLoggedIn - ", isUserLoggedIn);
-        
-
         return (
             <div className="TodoApp">
                 <Router>
-
                     <Header
                         // isAuthentificated = {this.state.isAuthentificated}
                         // setIsAuthentificated = {this.setIsAuthentificated} 
@@ -59,6 +55,7 @@ class TodoApp extends React.Component {
                         />
                         <Route exact path="/login" component={Login}/>
                         <AuthenticatedRoute path="/welcome/:name" component={Welcome}/>
+                        <AuthenticatedRoute path="/todos/:id" component={UpdateTodo}/>
                         <AuthenticatedRoute path="/todos" component={ListTodoComponent}/>
                         <AuthenticatedRoute path="/logout" component={Logout}/>
 
@@ -66,12 +63,9 @@ class TodoApp extends React.Component {
                     </Switch>
 
                     <Footer/>
-
                 </Router>
-
                 {/* <LoginComponent/>
                 <WelcomeComponent/> */}
-
             </div>
         )
     }
