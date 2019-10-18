@@ -2,14 +2,14 @@ import React from 'react';
 import './TodoApp.css';
 import TodoDataService from '../../api/todo/TodoDataService.js'
 import AuthenticationService from './AuthenticationService.js';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 
 
 // react toastify
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { log } from 'handlebars';
+// import { log } from 'handlebars';
 toast.configure();
 
 class ListTodoComponent extends React.Component {
@@ -23,7 +23,7 @@ class ListTodoComponent extends React.Component {
     }
   
     componentDidMount() {
-        let username = AuthenticationService.getLoggInUserName();
+        // let username = AuthenticationService.getLoggInUserName();
         this.refreshTodos();
     }
 

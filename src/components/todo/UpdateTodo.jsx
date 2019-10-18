@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import { FormikProvider, Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import TodoDataService from '../../api/todo/TodoDataService';
+import AuthenticationService from './AuthenticationService';
 
 class UpdateTodo extends Component {
     constructor(props) {
@@ -15,6 +17,19 @@ class UpdateTodo extends Component {
 
     onSubmit = (values) => {
         console.log(values);
+    }
+
+    componentDidMount = () => {
+        let username = AuthenticationService.getLoggInUserName();
+
+        TodoDataService.retrieveTodo(username, this.state.id)
+            .then(response => this.setState ({
+                description: response.data.description,
+                targetDate: moment(response.data.targetDate).format('YYY-MM-DD'),
+
+            })
+
+            )
     }
 
     validate = (values) => {
@@ -35,8 +50,7 @@ class UpdateTodo extends Component {
 
     render() {
 
-        let {description,targetDate} = this.state;
-
+        let {description, targetDate} = this.state;
         // let description = this.state.description;
         // let targetDate = this.state.targetDate;
         
@@ -44,9 +58,9 @@ class UpdateTodo extends Component {
             <React.Fragment>
                 <h1>Todo</h1>
                 <div className="container">
+                    
                     <Formik
-
-                        initialValues={{description,targetDate}}
+                        initialValues={{description, targetDate}}
                         onSubmit={this.onSubmit}
 
                         // until click save, validation does not happened
@@ -54,8 +68,9 @@ class UpdateTodo extends Component {
                         validateOnChange={false}
                         // only when field is not on target
                         validateOnBlur={false}
-                        
                         validate={this.validate}
+                        // update form if state is updated(ComponentDidMount)
+                        enableReinitialize={true}
                     >
                         {
                             (props) => (
