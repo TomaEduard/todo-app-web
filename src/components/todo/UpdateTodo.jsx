@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import TodoDataService from '../../api/todo/TodoDataService';
 import AuthenticationService from './AuthenticationService';
+import { S_IFREG } from 'constants';
 
 class UpdateTodo extends Component {
     constructor(props) {
@@ -10,30 +11,31 @@ class UpdateTodo extends Component {
 
         this.state = {
             id: this.props.match.params.id,
-            description: 'Learn Forms',
+            description: '',
             targetDate: moment(new Date()).format('YYY-MM-DD'),
         }
+
     }
 
-    onSubmit = (values) => {
-        console.log(values);
-    }
 
     componentDidMount = () => {
+
+        if(this.state.id === -1) {
+            return
+        }
+
         let username = AuthenticationService.getLoggInUserName();
 
         TodoDataService.retrieveTodo(username, this.state.id)
             .then(response => this.setState ({
                 description: response.data.description,
-                targetDate: moment(response.data.targetDate).format('YYY-MM-DD'),
+                targetDate: moment(response.data.targetDate).format('YYYY-MM-DD'),
 
-            })
-
-            )
+            }))
     }
 
     validate = (values) => {
-        let errors = {description:''}
+        let errors = {}
         
         if(!values.description) {
             errors.description = 'Enter a Description'
@@ -47,6 +49,34 @@ class UpdateTodo extends Component {
 
         return errors;
     }
+
+    onSubmit = (values) => {
+        let username = AuthenticationService.getLoggInUserName();
+
+        let todo = {
+            id: this.state.id,
+            description: values.description,
+            targetDate: values.targetDate,
+        }
+
+        if(this.state.id === -1) {
+            TodoDataService.createTodo(username, todo)
+            .then(() => this.props.history.push('/todos'))
+            console.log('createTodo - ', values);
+
+        } else {
+            TodoDataService.updateTodo(username, this.state.id, todo)
+            .then(() => this.props.history.push('/todos'));
+            console.log('updateTodo - ', values);
+        }
+
+
+    }
+
+    loginClicked = () => {
+        console.log("zxzxc");
+    }
+    
 
     render() {
 
@@ -97,7 +127,10 @@ class UpdateTodo extends Component {
                                         <Field className="form-control" type="date" name="targetDate"/>
                                     </fieldset>
                                     
-                                    <button className="btn btn-success button-update" type="submit">Save</button>
+                                    <button className="btn btn-success button-update"
+                                        type="submit"
+                                        // onClick={this.loginClicked}
+                                    >Save</button>
                                 </Form>
 
                             )

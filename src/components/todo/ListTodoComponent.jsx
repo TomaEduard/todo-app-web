@@ -57,7 +57,12 @@ class ListTodoComponent extends React.Component {
         //     )
     }
 
-    deleteTodoClicked(id) {
+    addTodoClicked = () => {
+        console.log('addTodoClicked ');
+        this.props.history.push(`/todos/-1`)
+    }
+
+    deleteTodoClicked = (id) => {
         let username = AuthenticationService.getLoggInUserName();
         console.log("deleteTodoClicked - ",username, " + ", id);
         
@@ -113,13 +118,23 @@ class ListTodoComponent extends React.Component {
                                     >Delete</button>
                                 </td>
                             </tr>
-                        )
-                        }
+                        )}
+          
                     </tbody>
 
                 </table>
 
+                <div>
+                    <div className="row">
+                        <button 
+                        className="btn btn-success"
+                        onClick={() => this.addTodoClicked()}
+                        >Add
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </React.Fragment>
       )
     }
