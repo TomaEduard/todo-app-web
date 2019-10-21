@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Route, Link } from 'react-router-dom';
 import HelloWorldService from '../../api/todo/HelloWorldService.js';
 import { log } from 'handlebars';
+import { isObject } from 'util';
 
 class Welcome extends React.Component {
     constructor(props) {
@@ -12,20 +13,9 @@ class Welcome extends React.Component {
     }
 
     retrieveWelcomeMessage = () => {
-        // console.log('retreive clicked');
-        // HelloWorldService.executeHelloWorldService()
-            // .then(response => this.handleSuccesfulResponse(response)
-        // )
-
-        // console.log('retreive clicked');
-        // HelloWorldService.executeHelloWorldBeanService()
-        // .then(response => this.handleSuccesfulResponse(response)
-        // )
-
         HelloWorldService.executeHelloWorldPathVariable(this.props.match.params.name)
         .then(response => this.handleSuccesfulResponse(response))
         .catch(error => this.handleError(error))
-
     }
 
     handleSuccesfulResponse(response) {
@@ -37,8 +27,17 @@ class Welcome extends React.Component {
 
     handleError(error) {
         console.log(error.response);
+        let errorMessage = '';
+        if(error.message) {
+            errorMessage += error.message
+        }
+
+        if(error.response && error.response.data) {
+            errorMessage += error.response.data.message
+        }
+
         this.setState ({
-            welcomeMessage: error.response.data.message,
+            welcomeMessage: errorMessage,
         })
     }
 

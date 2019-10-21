@@ -1,22 +1,40 @@
-import axios from 'axios';
+import axios from 'axios'
+import AuthenticationService from '../../components/todo/AuthenticationService';
 
 class HelloWorldService {
-
+    
     executeHelloWorldService() {
-        console.log("HelloWorldService - executeHelloWorldService");
-        return axios.get('http://localhost:8443/hello-world')
+        //console.log('executed service')
+        AuthenticationService.setupAxiosInterceptors2();
+
+        return axios.get('http://localhost:8443/hello-world');        
     }
 
     executeHelloWorldBeanService() {
-        console.log("HelloWorldService - executeHelloWorldService");
-        return axios.get('http://localhost:8443/hello-world-bean')
+        //console.log('executed service')
+        AuthenticationService.setupAxiosInterceptors2();
+
+        return axios.get('http://localhost:8443/hello-world-bean');        
+    }
+    
+    executeHelloWorldPathVariable(name) {
+        //console.log('executed service')
+        // let username = 'in28minutes'
+        // let password = 'dummy'
+
+        // let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
+
+        AuthenticationService.setupAxiosInterceptors2();
+        return axios.get(`http://localhost:8443/hello-world/path-variable/${name}`
+        // , 
+        //     {
+        //         headers : {
+        //             authorization: basicAuthHeader
+        //         }
+        //     }
+        );        
     }
 
-    executeHelloWorldPathVariable(name) {
-        console.log("HelloWorldService - executeHelloWorldService");
-        return axios.get(`http://localhost:8443/hello-world/path-variable/${name}`)
-    }
 }
 
-
-export default new HelloWorldService();
+export default new HelloWorldService()

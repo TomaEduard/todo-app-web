@@ -56,23 +56,34 @@ class Login extends React.Component {
     loginClicked = () => {
         // console.log(this.state);
 
-        if(this.state.username === 'defaultValue' && this.state.password === '1asd') {
+        // if(this.state.username === 'defaultValue' && this.state.password === '1asd') {
+        //     // props.setIsAuthentificated(true)
+        //     AuthenticationService.registerSuccesfulLogin(this.state.username, this.state.password);
+        //     this.props.history.push(`/welcome/${this.state.username}`)
+        //     window.location.reload();
+        //     toast("🦄 Login Successful !", {autoClose:3000,type: toast.TYPE.SUCCESS, position:toast.POSITION.BOTTOM_RIGHT})
+        // } else {
+        //     this.setState({
+        //         showSuccesMessage: false,
+        //         hasLoginFailed: true,
+        //     })
+        //     console.log("Failed");
+        //     toast("Invalid Credentials !", {autoClose:3000,type: toast.TYPE.WARNING, position:toast.POSITION.TOP_CENTER})
+        // }
 
-            // props.setIsAuthentificated(true)
-
-            AuthenticationService.registerSuccesfulLogin(this.state.username, this.state.password);
-            this.props.history.push(`/welcome/${this.state.username}`)
-
-            window.location.reload();
-            // toast("🦄 Login Successful !", {autoClose:3000,type: toast.TYPE.SUCCESS, position:toast.POSITION.BOTTOM_RIGHT})
-        } else {
-            this.setState({
-                showSuccesMessage: false,
-                hasLoginFailed: true,
+        AuthenticationService.executeBasicAuthenticationService(this.state.username, this.state.password)
+            .then(() => {
+                AuthenticationService.registerSuccesfulLogin(this.state.username, this.state.password);
+                this.props.history.push(`/welcome/${this.state.username}`)
+                window.location.reload();
+            }).catch(() => {
+                this.setState({
+                    showSuccesMessage: false,
+                    hasLoginFailed: true,
+                })
+                console.log("Failed");
+                toast("Invalid Credentials !", {autoClose:3000,type: toast.TYPE.WARNING, position:toast.POSITION.TOP_CENTER})
             })
-            console.log("Failed");
-            toast("Invalid Credentials !", {autoClose:3000,type: toast.TYPE.WARNING, position:toast.POSITION.TOP_CENTER})
-        }
     }
 
     render () {

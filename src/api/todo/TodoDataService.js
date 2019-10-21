@@ -1,9 +1,11 @@
 import axios from 'axios';
+import AuthenticationService from '../../components/todo/AuthenticationService';
 
 class TodoDataService {
 
     retrieveAllTodos(name) {
         console.log("TodoDataService - retrieveAllTodos");
+        AuthenticationService.setupAxiosInterceptors2();
         return axios.get(`http://localhost:8443/users/${name}/todos`)
     }
 
