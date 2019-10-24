@@ -18,10 +18,10 @@ img {
 
 .navbar-brand {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: white;
+  color: white !important;
   font-size: 29px;
   letter-spacing: -0px;
-  padding: 0;
+  padding: 0 !important;
   margin-left: 185px;
 }
 
@@ -45,13 +45,13 @@ span {
 
 
 a {
-  color: rgb(167, 165, 165);
-  font-weight: bold;
+  color: rgb(167, 165, 165) !important;
+  font-weight: bold !important;
 }
 
 a:hover {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
+  color: rgb(255, 255, 255) !important;
+  text-decoration: none !important;
 }
 
 .display-5 {

@@ -1,3 +1,0 @@
-onClick={() => this.deleteTodoClicked(e.id)}
-() => if the method need some parameter's
-

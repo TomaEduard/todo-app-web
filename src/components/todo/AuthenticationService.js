@@ -1,87 +1,64 @@
-import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+import axios from 'axios'
 
 class AuthenticationService {
 
-    refreshPage() {
-        window.location.reload(); 
-        toast("🦄 Login Successful !", {autoClose:3000,type: toast.TYPE.SUCCESS, position:toast.POSITION.BOTTOM_RIGHT})
-    }
-
     executeBasicAuthenticationService(username, password) {
-        return axios.get('http://localhost:8443/basicauth', {
-            headers: {
-                authorization: this.createBasicAuthToken(username, password)
-            }
-        } )
+        return axios.get('http://localhost:8443/basicauth', 
+            {headers: {authorization: this.createBasicAuthToken(username,password)}})
     }
 
-    // registerSuccesfulLogin(username, password) {
-    //     let basicAuthHeader = 'Basic ' + window.btoa(username + ":" + password)
+    executeJwtAuthenticationService(username, password) {
+        return axios.post('http://localhost:8443/authenticate', {
+            username,
+            password
+        })
+    }
 
-    //     // console.log("AuthenticationService - registerSuccesfullogin(username, password): ",username,password);
-
-    //     sessionStorage.setItem('authenticatedUser', username)
-    //     console.log('registerSuccesfulLogin - ', basicAuthHeader);
-    //     this.setupAxiosInterceptors(this.createBasicAuthToken(username,password))
-    //     this.setupAxiosInterceptors(basicAuthHeader);
-    // }
-
-    createBasicAuthToken(username, password) {
+    createBasicAuthToken(username,password) {
         return 'Basic ' +  window.btoa(username + ":" + password)
     }
-    
-    registerSuccesfulLogin(username, password){
+
+    registerSuccessfulLogin(username,password){
         //let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
+        //console.log('registerSuccessfulLogin')
         sessionStorage.setItem('authenticatedUser', username)
-        let basicAuthHeader = this.setupAxiosInterceptors(this.createBasicAuthToken(username, password))
-        console.log('registerSuccesfulLogin - ', basicAuthHeader);
+        this.setupAxiosInterceptors(this.createBasicAuthToken(username,password))
+    }
+
+    // JWT
+    registerSuccessfulLoginForJwt(username,token) {
+        sessionStorage.setItem('authenticatedUser', username)
+        this.setupAxiosInterceptors(this.createJWTToken(token))
+    }
+
+    createJWTToken(token) {
+        return 'Bearer ' +  token
     }
 
     logout() {
-        console.log("AuthenticationService - logout");
         sessionStorage.removeItem('authenticatedUser');
-        window.location.reload(); 
     }
+    //
 
     isUserLoggedIn() {
         let user = sessionStorage.getItem('authenticatedUser')
-        if (user === null) {
-            return false
-        } else return true;
+        if(user===null) return false
+        return true
     }
 
-    getLoggInUserName() {
+    getLoggedInUserName() {
         let user = sessionStorage.getItem('authenticatedUser')
-        if (user === null) {
-            return ''
-        } else return user;
+        if(user===null) return ''
+        return user
     }
 
-    // hard coded
-    setupAxiosInterceptors2() {
-        let username = 'defaultValue'
-        let password = '1asd'
+    setupAxiosInterceptors(token) {
+        console.log('xxxxx',token);
         
-        let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
-
         axios.interceptors.request.use(
             (config) => {
                 if(this.isUserLoggedIn()) {
-                    config.headers.authorization = basicAuthHeader
-                }
-                return config
-            }
-        )
-    }
-
-    setupAxiosInterceptors(basicAuthHeader) {
-
-        axios.interceptors.request.use(
-            (config) => {
-                if(this.isUserLoggedIn()) {
-                    config.headers.authorization = basicAuthHeader
+                    config.headers.authorization = token
                 }
                 return config
             }
@@ -89,4 +66,4 @@ class AuthenticationService {
     }
 }
 
-export default new AuthenticationService();
+export default new AuthenticationService()

@@ -1,80 +1,40 @@
-import React from 'react';
+import React, {Component} from 'react'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import AuthenticatedRoute from './AuthenticatedRoute.jsx'
+import LoginComponent from './LoginComponent.jsx'
+import ListTodosComponent from './ListTodosComponent.jsx'
+import ErrorComponent from './ErrorComponent.jsx'
+import HeaderComponent from './HeaderComponent.jsx'
+import FooterComponent from './FooterComponent.jsx'
+import LogoutComponent from './LogoutComponent.jsx'
+import WelcomeComponent from './WelcomeComponent.jsx'
+import TodoComponent from './TodoComponent.jsx'
 
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import ErrorComponent from '../todo/pages/ErrorComponent.jsx';
-import ListTodoComponent from '../todo/ListTodoComponent.jsx';
-import Logout from '../todo/Logout.jsx';
-import Welcome from './Welcome.jsx';
-import Header from './pages/Header.jsx';
-import Footer from './pages/Footer.jsx';
-import Login from './Login.jsx';
-import AuthenticationService from './AuthenticationService.js';
-import UpdateTodo from './UpdateTodo.jsx';
-
-import AuthenticatedRoute from './AuthentiocatedRoute.jsx';
-
-// css
-import './TodoApp.css';
-
-class TodoApp extends React.Component {
-    constructor(props) { 
-        super(props)       
-        this.state = {
-          isAuthentificated: false,
-  
-        }
-    }
-
-    setIsAuthentificated = (value) => {
-        this.setState ({
-            isAuthentificated: value,
-        })
-        // if (value) {
-        //     toast("🦄 Login Successful !", {autoClose:3000,type: toast.TYPE.SUCCESS, position:toast.POSITION.BOTTOM_RIGHT})
-        // } else {
-        //     null;
-        // }
-    }
-
+class TodoApp extends Component {
     render() {
-
-        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
-        console.log("TodoApp - isUserLoggedIn - ", isUserLoggedIn);
         return (
             <div className="TodoApp">
                 <Router>
-                    <Header
-                        // isAuthentificated = {this.state.isAuthentificated}
-                        // setIsAuthentificated = {this.setIsAuthentificated} 
-                    />
-
-                    <Switch>
-                        <Route exact path="/" component={Login}
-                        // isAuthentificated = {this.state.isAuthentificated}
-                        // setIsAuthentificated = {this.setIsAuthentificated} 
-                        />
-                        <Route exact path="/login" component={Login}/>
-                        <AuthenticatedRoute path="/welcome/:name" component={Welcome}/>
-                        <AuthenticatedRoute path="/todos/:id" component={UpdateTodo}/>
-                        <AuthenticatedRoute path="/todos" component={ListTodoComponent}/>
-                        <AuthenticatedRoute path="/logout" component={Logout}/>
-
-                        <Route component={ErrorComponent} />
-                    </Switch>
-
-                    <Footer/>
+                    <React.Fragment>
+                        <HeaderComponent/>
+                        <Switch>
+                            <Route path="/" exact component={LoginComponent}/>
+                            <Route path="/login" component={LoginComponent}/>
+                            <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent}/>
+                            <AuthenticatedRoute path="/todos/:id" component={TodoComponent}/>
+                            <AuthenticatedRoute path="/todos" component={ListTodosComponent}/>
+                            <AuthenticatedRoute path="/logout" component={LogoutComponent}/>
+                            
+                            <Route component={ErrorComponent}/>
+                        </Switch>
+                        <FooterComponent/>
+                    </React.Fragment>
                 </Router>
-                {/* <LoginComponent/>
-                <WelcomeComponent/> */}
+                {/*<LoginComponent/>
+                <WelcomeComponent/>*/}
             </div>
         )
     }
 }
 
-// ShowInvalidCredentials = (props) => {
-//     if (props.hasLoginFailed) {
-//         return <div>Invalid Credentials</div>
-//     } return null
-// }
-
-export default TodoApp;
+export default TodoApp

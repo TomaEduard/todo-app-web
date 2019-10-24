@@ -1,12 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-export function ThirdComponent() {
-
+function ThirdComponent() {
   return (
-
-    <div className="ThirdComponent">
-      ThirdComponent function
+    <div className="thirdComponent">
+       Third Component
     </div>
-
-  );
+  )
 }
+
+export default ThirdComponent
