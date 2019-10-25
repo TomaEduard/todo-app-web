@@ -26,7 +26,7 @@ class HeaderComponent extends Component {
           </div> */}
   
           <ul className="navbar-nav">
-            {isUserLoggedIn && <li className="nav-link display-5 ml-5"><Link to="/welcome/defaultValue">Home</Link></li>}
+            {isUserLoggedIn && <li className="nav-link display-5 ml-5"><Link to="/welcome/in28minutes">Home</Link></li>}
             {isUserLoggedIn && <li className="nav-link display-5 px-5"><Link to="/todos">Todos</Link></li>}
           </ul>
   

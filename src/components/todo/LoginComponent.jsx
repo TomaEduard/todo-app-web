@@ -46,7 +46,6 @@ class LoginComponent extends Component {
     // }
 
     loginClicked = () => {
-        //in28minutes,dummy
         // if(this.state.username==='in28minutes' && this.state.password==='dummy'){
         //     AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
         //     this.props.history.push(`/welcome/${this.state.username}`)
@@ -58,6 +57,7 @@ class LoginComponent extends Component {
         //     this.setState({hasLoginFailed:true})
         // }
 
+        // Basic Auth
         // AuthenticationService
         // .executeBasicAuthenticationService(this.state.username, this.state.password)
         // .then(() => {
@@ -71,8 +71,10 @@ class LoginComponent extends Component {
         AuthenticationService
         .executeJwtAuthenticationService(this.state.username, this.state.password)
         .then((response) => {
+            // save user in local storage & put token for every request with "axios.interceptors.request.use"
             AuthenticationService.registerSuccessfulLoginForJwt(this.state.username,response.data.token)
             this.props.history.push(`/welcome/${this.state.username}`)
+
         }).catch( () =>{
             this.setState({showSuccessMessage:false})
             this.setState({hasLoginFailed:true})

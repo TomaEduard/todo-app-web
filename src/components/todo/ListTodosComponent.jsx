@@ -18,16 +18,16 @@ class ListTodosComponent extends Component {
         // this.refreshTodos = this.refreshTodos.bind(this)
     }
 
-    componentWillUnmount = () => {
-        console.log('componentWillUnmount')
-    }
+    // componentWillUnmount = () => {
+    //     console.log('componentWillUnmount')
+    // }
     
-    shouldComponentUpdate = (nextProps, nextState) => {
-        console.log('shouldComponentUpdate')
-        console.log(nextProps)
-        console.log(nextState)
-        return true
-    }
+    // shouldComponentUpdate = (nextProps, nextState) => {
+    //     console.log('shouldComponentUpdate')
+    //     console.log(nextProps)
+    //     console.log(nextState)
+    //     return true
+    // }
 
     componentDidMount = () => {
         console.log('componentDidMount')
@@ -102,8 +102,8 @@ class ListTodosComponent extends Component {
                                 e =>
                                     <tr key={e.id}>
                                         <td>{e.description}</td>
-                                        <td>{e.done.toString()}</td>
                                         <td>{moment(e.targetDate).format('YYYY-MM-DD')}</td>
+                                        <td>{e.done.toString()}</td>
                                         <td><button className="btn btn-success" onClick={() => this.updateTodoClicked(e.id)}>Update</button></td>
                                         <td><button className="btn btn-warning" onClick={() => this.deleteTodoClicked(e.id)}>Delete</button></td>
                                     </tr>
