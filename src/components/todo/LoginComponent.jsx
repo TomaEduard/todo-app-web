@@ -79,7 +79,6 @@ class LoginComponent extends Component {
             this.setState({showSuccessMessage:false})
             this.setState({hasLoginFailed:true})
         })
-
     }
 
     render() {

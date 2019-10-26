@@ -36,25 +36,30 @@ class ListTodosComponent extends Component {
     }
 
     refreshTodos = () => {
-        let username = AuthenticationService.getLoggedInUserName()
-        TodoDataService.retrieveAllTodos(username)
-          .then(
-              response => {
-                  //console.log(response);
-                  this.setState({todos : response.data})
-              }
-          ) 
+        try{
+            let username = AuthenticationService.getLoggedInUserName()
+            TodoDataService.retrieveAllTodos(username)
+            .then(
+                response => {
+                    //console.log(response);
+                    this.setState({todos : response.data})
+                }
+            ) 
+        } catch (e) {
+            console.log(e.response) // undefined
+        }
+        
     }
 
     deleteTodoClicked = (id) => {
         let username = AuthenticationService.getLoggedInUserName()
-        //console.log(id + " " + username);
+        console.log('#1 ',id + " " + username);
         TodoDataService.deleteTodo(username, id)
-         .then (
-             response => {
+        .then (
+            response => {
                 this.setState({message : `Delete of todo ${id} Successful`})
                 this.refreshTodos()
-             }
+            }
          )
         
     }
